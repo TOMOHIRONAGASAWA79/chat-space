@@ -9,13 +9,14 @@
 
 ### Association
 - belongs_to :group
-- has_many :chats
+- has_many :messages
 
-## chatテーブル
+##　messagesテーブル
 
 |Column|Type|Options|
 |------|----|-------|
-|text|string|null: false|
+|body|string|null: false|
+|image|string|null: false|
 |user_id|integer|null: false, foreign_key: true|
 |group_id|integer|null: false, foreign_key: true|
 
@@ -33,7 +34,7 @@
 
 ### Association
 - belongs_to :user
-- has_many :chats
+- has_many :messages
 
 ## groups_usersテーブル
 
