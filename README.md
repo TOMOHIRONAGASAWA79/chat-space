@@ -5,18 +5,18 @@
 |name|string|null: false|
 |email|string|null: false|
 |passsword|string|null: false|
-|group_id|integer|null: false, foreign_key: true|
+
 
 ### Association
-- belongs_to :group
+- has_many :group_users
 - has_many :messages
 
 ##　messagesテーブル
 
 |Column|Type|Options|
 |------|----|-------|
-|body|string|null: false|
-|image|string|null: false|
+|body|string|
+|image|string|
 |user_id|integer|null: false, foreign_key: true|
 |group_id|integer|null: false, foreign_key: true|
 
@@ -29,11 +29,9 @@
 |Column|Type|Options|
 |------|----|-------|
 |name|string|null: false|
-|group|string|null: false|
-|user_id|integer|null: false, foreign_key: true|
 
 ### Association
-- belongs_to :user
+- has_many :groups_users
 - has_many :messages
 
 ## groups_usersテーブル
