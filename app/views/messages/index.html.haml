@@ -1,3 +1,4 @@
 .wrapper 
-  = render "side_bar"  
-  = render "main_chat" 
+  = render "shared/side_bar"  
+  = render "main_chat", locals: { group: @group }
+  -# = render partial: 'form', locals: { group: @group }
