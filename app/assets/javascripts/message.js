@@ -35,10 +35,13 @@ $(function(){
     .done(function(data){
       let html = buildHTML(data);
       $('.messages').append(html)
-      $('#message_content').val('');
+      $('#new_message')[0].reset("");
       $('.messages').animate({ scrollTop: $('.messages')[0].scrollHeight});
       $(".submit-btn").prop('disabled', false);
     })
+    .fail(function() {
+        alert("メッセージ送信に失敗しました");
+    });
   }) 
 });
 
