@@ -1,8 +1,9 @@
 $(function(){
+
   function buildHTML(message){
     let content = message.content ? `${ message.content }` : "";
     let image = message.image ? `<img src= ${ message.image }>` : "";
-     let html = `<div class="message">
+     let html = `<div class="message" data-messages-id="${message.id}">
                   <div class="upper-message">
                     <div class="upper-message__user-name">
                     ${message.user_name}
@@ -42,7 +43,28 @@ $(function(){
     .fail(function() {
         alert("メッセージ送信に失敗しました");
     });
-  }) 
-});
-
-
+  })
+  
+  let reloadMessages = function() {
+  if (window.location.href.match(/\/groups\/\d+\/messages/)) {
+    last_message_id = $(".message:last").data("message-id");
+    $.ajax({
+      url: "api/messages", 
+      type: 'GET',
+      dataType: 'json',
+      data: {id: last_message_id}
+    }) 
+    .done(function(messages) {
+      messages.forEach(function(message){
+        let insertHTML = buildHTML(message)
+        $('.messages').append(insertHTML)
+    })
+    $('.messages').animate({scrollTop: $('.messages')[0].scrollHeight}, 'fast');
+    })
+    .fail(function() {
+     console.log('ERROR');
+    });
+      }
+    }
+   setInterval(reloadMessages, 5000);
+  });
