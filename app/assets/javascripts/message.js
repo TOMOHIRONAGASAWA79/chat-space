@@ -3,7 +3,7 @@ $(function(){
   function buildHTML(message){
     let content = message.content ? `${ message.content }` : "";
     let image = message.image ? `<img src= ${ message.image }>` : "";
-     let html = `<div class="message" data-messages-id="${message.id}">
+     let html = `<div class="message" data-message-id="${message.id}">
                   <div class="upper-message">
                     <div class="upper-message__user-name">
                     ${message.user_name}
@@ -45,6 +45,8 @@ $(function(){
     });
   })
   
+  //自動更新機能
+
   let reloadMessages = function() {
   if (window.location.href.match(/\/groups\/\d+\/messages/)) {
     last_message_id = $(".message:last").data("message-id");
@@ -54,17 +56,19 @@ $(function(){
       dataType: 'json',
       data: {id: last_message_id}
     }) 
+    
     .done(function(messages) {
-      messages.forEach(function(message){
-        let insertHTML = buildHTML(message)
-        $('.messages').append(insertHTML)
-    })
-    $('.messages').animate({scrollTop: $('.messages')[0].scrollHeight}, 'fast');
+      let insertHTML = '';
+      $.each(messages, function(i, message) {
+        insertHTML += buildHTML(message)
+        $('.messages').append(insertHTML);
+      });
+        $('.messages').animate({scrollTop: $('.messages')[0].scrollHeight}, 'fast');
     })
     .fail(function() {
-     alert('ERROR');
+       alert('ERROR');
     });
       }
     }
-   setInterval(reloadMessages, 7000);
+   setInterval(reloadMessages, 5000);
   });
